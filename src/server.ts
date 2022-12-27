@@ -1,14 +1,15 @@
 import app from "./app";
 import AppDataSource from "./data-source";
+import "dotenv/config";
 
-(async () => {
+const PORT = process.env.PORT || 3000;
 
-    await AppDataSource.initialize()
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err)
-    })
-    
-    app.listen(3000, () => {
-        console.log("Servidor executando")
-    })    
-})()
+AppDataSource.initialize()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App running http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
